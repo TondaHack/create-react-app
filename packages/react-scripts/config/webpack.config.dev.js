@@ -186,7 +186,10 @@ module.exports = {
       // Process JS with Babel.
       {
         test: /\.(js|jsx)$/,
-        include: paths.appSrc,
+        include: [
+          paths.appSrc,
+          paths.appNodeModules + '/react-shared-components',
+        ],
         loader: require.resolve('babel-loader'),
         options: {
           // @remove-on-eject-begin
@@ -212,6 +215,8 @@ module.exports = {
             loader: require.resolve('css-loader'),
             options: {
               importLoaders: 1,
+              modules: 1,
+              localIdentName: '[name]__[local]___[hash:base64:5]',
             },
           },
           {
@@ -220,7 +225,8 @@ module.exports = {
               ident: 'postcss', // https://webpack.js.org/guides/migrating/#complex-options
               plugins: () => [
                 require('postcss-flexbugs-fixes'),
-                autoprefixer({
+                require('postcss-import')(),
+                require('postcss-cssnext')({
                   browsers: [
                     '>1%',
                     'last 4 versions',
