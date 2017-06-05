@@ -1,5 +1,5 @@
 {
-  "extends": "eslint:recommended",
+  "extends": "prague",
   "env": {
     "browser": true,
     "commonjs": true,
